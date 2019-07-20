@@ -2,6 +2,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from requests_unixsocket import Session
 from docker_dashboard.settings import DOCKER_API
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 
 def redirect_view(request):
@@ -40,5 +43,62 @@ def container_list(request):
     return render(request, 'dashboard/container_list.html', {'containers': containers})
 
 
-def stop_container(request):
-    pass
+class StopContainer(APIView):
+
+    def post(self, request):
+        container = request.data['name']
+        session = Session()
+        resp = session.post(DOCKER_API + 'containers/{}/stop'.format(container))
+        if resp.status_code == 204:
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class StartContainer(APIView):
+
+    def post(self, request):
+        container = request.data['name']
+        session = Session()
+        resp = session.post(DOCKER_API + 'containers/{}/start'.format(container))
+        if resp.status_code == 204:
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class CreateContainer(APIView):
+
+    def post(self, request):
+        image = request.data['name']
+        session = Session()
+        data = {
+            "Image": image
+        }
+        resp = session.post(DOCKER_API + 'containers/create', json=data)
+        if resp.status_code == 201:
+            container_id = resp.json()['Id']
+            resp = session.post(DOCKER_API + 'containers/{}/start'.format(container_id))
+            if resp.status_code == 204:
+                return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class DeleteContainer(APIView):
+
+    def post(self, request):
+        container = request.data['name']
+        session = Session()
+        resp = session.delete(DOCKER_API + 'containers/{}?force=True'.format(container))
+        if resp.status_code == 204:
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class DeleteImage(APIView):
+
+    def post(self, request):
+        container = request.data['name']
+        session = Session()
+        resp = session.delete(DOCKER_API + 'images/{}?force=True'.format(container))
+        if resp.status_code == 200:
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
