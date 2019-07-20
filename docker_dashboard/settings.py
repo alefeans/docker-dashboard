@@ -103,4 +103,45 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[%(levelname)s] - [%(asctime)s] - %(module)s - %(message)s'
+        }
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': LOG_LEVEL,
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+            },
+        },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': LOG_LEVEL,
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': LOG_LEVEL,
+            'propagate': False,
+        },
+        '': {
+            'handlers': ['console'],
+            'level': LOG_LEVEL,
+            'propagate': False
+        },
+    },
+}
+
 DOCKER_API = 'http+unix://%2Fvar%2Frun%2Fdocker.sock/'
