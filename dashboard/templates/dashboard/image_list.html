@@ -1,0 +1,31 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<table class="table table-borderless">
+    <thead>
+        <tr>
+            <th scope="col">Repo</th>
+            <th scope="col">Image</th>
+            <th scope="col">Tag</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <div>
+
+    </div>
+    <tbody>
+            {% for image in images %}
+            <tr>
+                <td>{{image.repo}}</td>
+                <td>{{image.name}}</td>
+                <td>{{image.tag}}</td>
+                <td>
+                    <a href="/delete_image" class="btn btn-danger" role="button">Delete</a>
+                    <a href="/create_container" class="btn btn-success" role="button">Start Container</a>
+                </td>
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

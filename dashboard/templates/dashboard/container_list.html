@@ -1,0 +1,30 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<table class="table table-borderless">
+    <thead>
+        <tr>
+            <th scope="col">Container ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Image</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+            {% for container in containers %}
+            <tr>
+                <td>{{container.id}}</td>
+                <td>{{container.name}}</td>
+                <td>{{container.image}}</td>
+                <td>{{container.status}}</td>
+                <td>
+                    <a href="/stop_container" class="btn btn-danger" role="button">Stop</a>
+                    <a href="/start_container" class="btn btn-success" role="button">Start</a>
+                </td>
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
