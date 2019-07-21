@@ -1,7 +1,9 @@
 # Docker Dashboard
-[![Python](https://img.shields.io/badge/python-3.7-blue.svg)]() [![MIT License](https://img.shields.io/badge/license-MIT-007EC7.svg?style=flat)](/LICENSE)
+[![Python](https://img.shields.io/badge/python-3.7-blue.svg)]() [![Python](https://img.shields.io/badge/python-3.6-blue.svg)]() [![MIT License](https://img.shields.io/badge/license-MIT-007EC7.svg?style=flat)](/LICENSE)
 
 A simple Dashboard to manage your **Docker** containers and images !
+
+![](/imgs/dashboard_usage.gif)
 
 # Getting Started
 
@@ -46,7 +48,7 @@ docker_dashboard
 ## To Do
 
 - Include unit tests.
-- Search bar to pull new Docker images from Docker Hub.
+- Add Docker multi-stage builds.
 
 ## License
 
