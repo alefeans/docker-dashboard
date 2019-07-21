@@ -16,14 +16,15 @@ def image_list(request):
         return render(request, 'dashboard/image_list.html', {})
 
     images = []
+    print(resp)
     for res in resp:
         for r in res['RepoTags']:
-            full_name = r.split('/')
-            name, tag = full_name[-1].split(':')
+            name, tag = r.split(':')
+            img_id = res['Id'].split(':')
             image = {
-                'repo': '/'.join(full_name[:2]),
-                'name': name,
-                'tag': tag
+                'repo': name,
+                'tag': tag,
+                'id': img_id[1][:12]
             }
             images.append(image)
     return render(request, 'dashboard/image_list.html', {'images': images})

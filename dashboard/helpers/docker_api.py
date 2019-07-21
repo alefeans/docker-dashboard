@@ -9,7 +9,6 @@ logger = logging.getLogger(__name__)
 def docker_requester(func):
     def wrapper(*args, **kwargs):
         method, endpoint, data = func(*args, **kwargs)
-        print(endpoint)
         session = Session()
         try:
             call = getattr(session, method)

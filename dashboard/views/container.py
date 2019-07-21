@@ -17,7 +17,7 @@ def container_list(request):
     containers = []
     for r in resp:
         container = {
-            'id': r['Id'][:13],
+            'id': r['Id'][:12],
             'name': r['Names'][0].replace('/', ''),
             'image': r['Image'],
             'status': r['Status']

@@ -5,8 +5,8 @@
     <thead>
         <tr>
             <th scope="col">Repo</th>
-            <th scope="col">Image</th>
             <th scope="col">Tag</th>
+            <th scope="col">Image ID</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -17,8 +17,8 @@
             {% for image in images %}
             <tr>
                 <td>{{image.repo}}</td>
-                <td>{{image.name}}</td>
                 <td>{{image.tag}}</td>
+                <td>{{image.id}}</td>
                 <td>
                     <a href="/create_container" class="btn btn-success" role="button">Start Container</a>
                     <a href="/delete_image" class="btn btn-danger" role="button">Delete</a>
