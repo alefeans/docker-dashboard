@@ -16,7 +16,6 @@ def image_list(request):
         return render(request, 'dashboard/image_list.html', {})
 
     images = []
-    print(resp)
     for res in resp:
         for r in res['RepoTags']:
             name, tag = r.split(':')
