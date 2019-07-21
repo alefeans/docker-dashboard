@@ -9,10 +9,10 @@ from dashboard.helpers import (list_container,
                                delete_container)
 
 
-def container_list(request):
+def containers_list(request):
     resp = list_container()
     if not resp:
-        return render(request, 'dashboard/container_list.html', {})
+        return render(request, 'dashboard/containers.html', {})
 
     containers = []
     for r in resp:
@@ -23,7 +23,7 @@ def container_list(request):
             'status': r['Status']
         }
         containers.append(container)
-    return render(request, 'dashboard/container_list.html', {'containers': containers})    
+    return render(request, 'dashboard/containers.html', {'containers': containers})    
 
 
 class StartContainer(APIView):

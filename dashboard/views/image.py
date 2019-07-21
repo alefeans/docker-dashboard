@@ -10,10 +10,10 @@ def redirect_view(request):
     return HttpResponseRedirect('/images')
 
 
-def image_list(request):
+def images_list(request):
     resp = list_image()
     if not resp:
-        return render(request, 'dashboard/image_list.html', {})
+        return render(request, 'dashboard/images.html', {})
 
     images = []
     for res in resp:
@@ -26,7 +26,7 @@ def image_list(request):
                 'id': img_id[1][:12]
             }
             images.append(image)
-    return render(request, 'dashboard/image_list.html', {'images': images})
+    return render(request, 'dashboard/images.html', {'images': images})
 
 
 class DeleteImage(APIView):

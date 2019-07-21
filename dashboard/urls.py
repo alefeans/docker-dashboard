@@ -3,11 +3,11 @@ from dashboard import views
 
 urlpatterns = [
     path('', views.redirect_view, name='redirect_view'),
-    path('images', views.image_list, name='image_list'),
-    path('containers', views.container_list, name='container_list'),
-    path('stop_container', views.StopContainer.as_view(), name='stop_container'),
-    path('start_container', views.StartContainer.as_view(), name='start_container'),
-    path('create_container', views.CreateContainer.as_view(), name='create_container'),
-    path('delete_container', views.DeleteContainer.as_view(), name='delete_container'),
-    path('delete_image', views.DeleteImage.as_view(), name='delete_image'),
+    path('images', views.images_list, name='images_list'),
+    path('containers', views.containers_list, name='containers_list'),
+    path('containers/stop', views.StopContainer.as_view(), name='stop_containers'),
+    path('containers/start', views.StartContainer.as_view(), name='start_containers'),
+    path('containers/create', views.CreateContainer.as_view(), name='create_containers'),
+    path('containers/delete', views.DeleteContainer.as_view(), name='delete_containers'),
+    path('images/delete', views.DeleteImage.as_view(), name='delete_images'),
 ]
