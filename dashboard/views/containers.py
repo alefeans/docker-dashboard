@@ -20,10 +20,11 @@ def containers_list(request):
             'id': r['Id'][:12],
             'name': r['Names'][0].replace('/', ''),
             'image': r['Image'],
-            'status': r['Status']
+            'status': r['Status'],
+            'state': r['State']
         }
         containers.append(container)
-    return render(request, 'dashboard/containers.html', {'containers': containers})    
+    return render(request, 'dashboard/containers.html', {'containers': containers})  
 
 
 class StartContainer(APIView):
