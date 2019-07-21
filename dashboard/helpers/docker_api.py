@@ -1,4 +1,5 @@
 import logging
+from json.decoder import JSONDecodeError
 from requests_unixsocket import Session
 from requests import RequestException
 from docker_dashboard.settings import DOCKER_API
@@ -25,7 +26,10 @@ def docker_requester(func):
         if resp.status_code == 204:
             return True
         if resp.status_code == 201 or resp.status_code == 200:
-            return resp.json()
+            try:
+                return resp.json()
+            except JSONDecodeError:
+                return True
         return {}
 
     return wrapper
@@ -33,7 +37,7 @@ def docker_requester(func):
 
 @docker_requester
 def list_container():
-    return 'get', 'containers/json?all=True', None
+    return 'get', 'containers/json?all=true', None
 
 
 @docker_requester
@@ -68,3 +72,11 @@ def list_image():
 def delete_image(image):
     endpoint = 'images/{}?force=True'.format(image)
     return 'delete', endpoint, None
+
+
+@docker_requester
+def pull_image(image, tag):
+    if not tag:
+        tag = 'latest'
+    endpoint = 'images/create?fromImage={}&tag={}'.format(image, tag)
+    return 'post', endpoint, None
