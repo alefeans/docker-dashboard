@@ -1,2 +1,2 @@
-from .container import *
-from .image import *
+from .containers import *
+from .images import *
