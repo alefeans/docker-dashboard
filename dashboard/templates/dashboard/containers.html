@@ -1,7 +1,7 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
-<table class="table table-borderless">
+<table class="table table-hover">
     <thead>
         <tr>
             <th scope="col">Container ID</th>
@@ -12,20 +12,89 @@
         </tr>
     </thead>
     <tbody>
-            {% for container in containers %}
+        {% for container in containers %}
             <tr>
                 <td>{{container.id}}</td>
                 <td>{{container.name}}</td>
                 <td>{{container.image}}</td>
                 <td>{{container.status}}</td>
                 <td>
-                    <a href="containers/start" class="btn btn-success" role="button">Start</a>
-                    <a href="containers/stop" class="btn btn-danger" role="button">Stop</a>
-                    <a href="containers/delete" class="btn btn-secondary" role="button">Delete</a>
+                    <button type="button" id="btn_start" value="{{container.name}}" class="btn btn-success start" {% if container.state == 'running' %} disabled {% endif %}>Start</button>
+                    <button type="button" id="btn_stop" value="{{container.name}}" class="btn btn-danger stop" {% if container.state != 'running' %} disabled {% endif %}>Stop</button>
+                    <button type="button" id="btn_delete" value="{{container.name}}" class="btn btn-secondary delete" >Delete</button>
                 </td>
             </tr>
-            {% endfor %}
+        {% endfor %}
     </tbody>
 </table>
+<script>
+    
+    $('.stop').click((element) => {
+        container = element.target.value
+        stop_container(container)
+    })
+
+    function stop_container(container) {
+        var result = confirm(`Do you want to stop container '${container}' ?`);
+        if (result){
+            $.ajax({
+                method: "POST",
+                url: "containers/stop",
+                data: {name: container},
+                success: function(){
+                    alert("Container stopped successfully !")
+                    location.reload(true);
+                },
+                error: function(){
+                    alert(`Can't stop container '${container}'`)
+                }
+            });
+        }
+    };
+
+    $('.start').click((element) => {
+        container = element.target.value
+        start_container(container)
+    })
+
+    function start_container(container) {
+        $.ajax({
+            method: "POST",
+            url: "containers/start",
+            data: {name: container},
+            success: function(){
+                alert("Container started successfully !")
+                location.reload(true);
+            },
+            error: function(){
+                alert(`Can't start container '${container}'`)
+            }
+        });
+    };
+
+    $('.delete').click((element) => {
+        container = element.target.value
+        delete_container(container)
+    })
+
+    function delete_container(container) {
+        var result = confirm(`Do you want to DELETE container '${container}' ?`);
+        if (result){
+            $.ajax({
+                method: "POST",
+                url: "containers/delete",
+                data: {name: container},
+                success: function(){
+                    alert("Container deleted successfully!")
+                    location.reload(true);
+                },
+                error: function(){
+                    alert(`Can't delete container '${container}'`)
+                }
+            });
+        }
+    };
+
+</script>
 {% endblock %}
 

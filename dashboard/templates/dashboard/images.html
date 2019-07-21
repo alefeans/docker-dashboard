@@ -1,8 +1,20 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
-<table class="table table-borderless">
+<table class="table table-hover">
     <thead>
+        <tr>
+            <th scope="col" colspan="2">
+                <div class="input-group mb-3">
+                    <input type="text" id="image_txt" class="form-control" placeholder="Pull new image from Docker Hub, e.g: ubuntu:latest" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary pull" id="pull_bt" type="button">Search</button>
+                    </div>
+                </div>
+            </th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
         <tr>
             <th scope="col">Repo</th>
             <th scope="col">Tag</th>
@@ -10,22 +22,110 @@
             <th scope="col">Actions</th>
         </tr>
     </thead>
-    <div>
-
-    </div>
     <tbody>
-            {% for image in images %}
+        {% for image in images %}
             <tr>
                 <td>{{image.repo}}</td>
                 <td>{{image.tag}}</td>
                 <td>{{image.id}}</td>
                 <td>
-                    <a href="containers/create" class="btn btn-success" role="button">Start Container</a>
-                    <a href="images/delete" class="btn btn-danger" role="button">Delete</a>
+                    <button type="button" value={{image.full_name}} class="btn btn-success create">Create Container</button>
+                    <button type="button" value={{image.full_name}} class="btn btn-danger delete">Delete</button>
                 </td>
             </tr>
-            {% endfor %}
+        {% endfor %}
     </tbody>
 </table>
+<script>
+
+    var input = document.getElementById("image_txt");
+
+    input.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("pull_bt").click();
+    }
+    });
+
+    $('.create').click((element) => {
+        container = element.target.value
+        create_container(container)
+    })
+
+    function create_container(container) {
+        $.ajax({
+            method: "POST",
+            url: "containers/create",
+            data: {name: container},
+            success: function(){
+                alert("Container created successfully !")
+                location.reload(true);
+            },
+            error: function(){
+                alert(`Can't create from image '${container}'`)
+            }
+        });
+    };
+
+    $('.delete').click((element) => {
+        image = element.target.value
+        delete_image(image)
+    })
+
+    function delete_image(image) {
+        var result = confirm(`Do you want to DELETE image '${image}' ?`);
+        if (result){
+            $.ajax({
+                method: "POST",
+                url: "images/delete",
+                data: {name: image},
+                success: function(){
+                    alert("Image deleted successfully !")
+                    location.reload(true);
+                },
+                error: function(){
+                    alert(`Can't delete image '${image}'`)
+                }
+            });
+        }
+    };
+
+    $('.pull').click((element) => {
+        input = $('#image_txt').val()
+        if (input == ''){
+            alert("Please, text some Docker Image name.")
+        } else {
+            full_name = input.split(':');
+            image = full_name[0]
+            tag = full_name[1]
+            if  (tag == null){
+                tag = 'latest'
+            }
+            pull_image(image, tag)
+        }
+    })
+
+    function pull_image(image, tag) {
+        var result = confirm(`Do you want to pull image '${image}:${tag}' ?`);
+        if (result){
+            $("#pull_bt").append(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+            $.ajax({
+                method: "POST",
+                url: "images/pull",
+                data: {name: image, tag: tag},
+                success: function(){
+                    $("#pull_bt").find('i').remove()    
+                    alert("Image pulled successfully !")
+                    location.reload(true);
+                },
+                error: function(){
+                    $("#pull_bt").find('i').remove()
+                    alert(`Can't pull image '${image} from Docker Hub !'`)
+                }
+            });
+        }
+    };
+
+</script>
 {% endblock %}
 
