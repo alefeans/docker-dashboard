@@ -15,11 +15,13 @@ def docker_requester(func):
             call = getattr(session, method)
         except (AttributeError, TypeError):
             logger.error("Method '{}' does not exists in Session object".format(method))
+            return False
 
         try:
             resp = call(DOCKER_API + endpoint, json=data, timeout=30)
         except RequestException as e:
             logger.error('Docker API request failed: {}'.format(e))
+            return False
 
         logger.debug('Docker API response: {}, {}'.format(resp.status_code, resp.text))
 
@@ -70,7 +72,7 @@ def list_image():
 
 @docker_requester
 def delete_image(image):
-    endpoint = 'images/{}?force=True'.format(image)
+    endpoint = 'images/{}'.format(image)
     return 'delete', endpoint, None
 
 
