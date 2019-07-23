@@ -18,6 +18,8 @@ pip install -r requirements.txt
 
 ## Usage
 
+Start your Docker engine (e.g in Fedora: `systemctl start docker`), use one of the options to start the Docker Dashboard below and open your browser on `localhost:8000`:
+
 ### Development
 
 ```
