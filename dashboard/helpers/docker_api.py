@@ -23,7 +23,7 @@ def docker_requester(func):
             logger.error('Docker API request failed: {}'.format(e))
             return False
 
-        logger.debug('Docker API response: {}, {}'.format(resp.status_code, resp.text))
+        logger.debug('Docker API response: {}'.format(resp.status_code))
 
         if resp.status_code == 204:
             return True
@@ -32,7 +32,7 @@ def docker_requester(func):
                 return resp.json()
             except JSONDecodeError:
                 return True
-        return {}
+        return False
 
     return wrapper
 
