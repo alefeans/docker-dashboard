@@ -12,7 +12,7 @@ A simple Dashboard to manage your **Docker** containers and images !
 To install the _Docker Dashboard_ you will need to:
 
 ```
-git clone https://github.com/alefeans/docker_dashboard.git .
+git clone https://github.com/alefeans/docker_dashboard.git && cd docker_dashboard
 pip install -r requirements.txt
 ```
 
