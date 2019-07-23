@@ -16,18 +16,21 @@ def images_list(request):
         return render(request, 'dashboard/images.html', {})
 
     images = []
-    for res in resp:
-        for r in res['RepoTags']:
-            name, tag = r.split(':')
-            img_id = res['Id'].split(':')
-            image = {
-                'repo': name,
-                'tag': tag,
-                'id': img_id[1][:12],
-                'full_name': r
-            }
-            images.append(image)
-    return render(request, 'dashboard/images.html', {'images': images})
+    try:
+        for res in resp:
+            for r in res['RepoTags']:
+                name, tag = r.split(':')
+                img_id = res['Id'].split(':')
+                image = {
+                    'repo': name,
+                    'tag': tag,
+                    'id': img_id[1][:12],
+                    'full_name': r
+                }
+                images.append(image)
+        return render(request, 'dashboard/images.html', {'images': images})
+    except (KeyError, TypeError):
+        return render(request, 'dashboard/images.html', {})
 
 
 class DeleteImage(APIView):

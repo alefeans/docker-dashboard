@@ -15,16 +15,19 @@ def containers_list(request):
         return render(request, 'dashboard/containers.html', {})
 
     containers = []
-    for r in resp:
-        container = {
-            'id': r['Id'][:12],
-            'name': r['Names'][0].replace('/', ''),
-            'image': r['Image'],
-            'status': r['Status'],
-            'state': r['State']
-        }
-        containers.append(container)
-    return render(request, 'dashboard/containers.html', {'containers': containers})  
+    try:
+        for r in resp:
+            container = {
+                'id': r['Id'][:12],
+                'name': r['Names'][0].replace('/', ''),
+                'image': r['Image'],
+                'status': r['Status'],
+                'state': r['State']
+            }
+            containers.append(container)
+        return render(request, 'dashboard/containers.html', {'containers': containers})  
+    except (KeyError, TypeError):
+        return render(request, 'dashboard/containers.html', {})
 
 
 class StartContainer(APIView):
