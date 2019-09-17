@@ -1,5 +1,5 @@
 # Docker Dashboard
-[![Build Status](https://travis-ci.org/alefeans/docker-dashboard.svg?branch=master)](https://travis-ci.org/alefeans/docker-dashboard) [![Python](https://img.shields.io/badge/python-3.7-blue.svg)]() [![Python](https://img.shields.io/badge/python-3.6-blue.svg)]() [![MIT License](https://img.shields.io/badge/license-MIT-007EC7.svg?style=flat)](/LICENSE)
+[![Build Status](https://travis-ci.org/alefeans/docker_dashboard.svg?branch=master)](https://travis-ci.org/alefeans/docke_dashboard) [![Python](https://img.shields.io/badge/python-3.7-blue.svg)]() [![Python](https://img.shields.io/badge/python-3.6-blue.svg)]() [![MIT License](https://img.shields.io/badge/license-MIT-007EC7.svg?style=flat)](/LICENSE)
 
 A simple Dashboard to manage your **Docker** containers and images !
 
