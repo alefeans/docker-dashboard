@@ -1,5 +1,5 @@
 # Docker Dashboard
-[![Build Status](https://travis-ci.org/alefeans/docker_dashboard.svg?branch=master)](https://travis-ci.org/alefeans/docker_dashboard) [![Python](https://img.shields.io/badge/python-3.7-blue.svg)]() [![Python](https://img.shields.io/badge/python-3.6-blue.svg)]() [![MIT License](https://img.shields.io/badge/license-MIT-007EC7.svg?style=flat)](/LICENSE)
+[![Build Status](https://travis-ci.org/alefeans/docker-dashboard.svg?branch=master)](https://travis-ci.org/alefeans/docker-dashboard) [![Python](https://img.shields.io/badge/python-3.7-blue.svg)]() [![Python](https://img.shields.io/badge/python-3.6-blue.svg)]() [![MIT License](https://img.shields.io/badge/license-MIT-007EC7.svg?style=flat)](/LICENSE)
 
 A simple Dashboard to manage your **Docker** containers and images !
 
@@ -12,7 +12,7 @@ A simple Dashboard to manage your **Docker** containers and images !
 To install the _Docker Dashboard_ you will need to:
 
 ```
-git clone https://github.com/alefeans/docker_dashboard.git && cd docker_dashboard
+git clone https://github.com/alefeans/docker-dashboard.git && cd docker-dashboard
 pip install -r requirements.txt
 ```
 
